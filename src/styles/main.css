@@ -1,0 +1,825 @@
+.content-area {
+	flex: 1;
+	display: flex;
+	overflow: hidden;
+}
+
+.main-content {
+	align-items: center;
+	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - 6rem);
+	overflow-y: auto;
+	padding: 2px 0 6rem;
+	position: relative;
+	top: 6rem;
+	transition: all 0.3s ease-in-out;
+	/*left: 300px;*/
+	/*width: calc(100% - 300px);*/
+}
+
+.main-content-sidenav-open {
+	left: 300px;
+	width: calc(100% - 300px);
+}
+
+/* main-content when SideNav is closed */
+.main-content-sidenav-closed {
+	left: 0;
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.main-content {
+		left: 0;
+		width: 100%;
+	}
+}
+
+.chat-form-wrapper {
+	align-items: flex-start;
+	/* Aligns items to the start of the cross axis which is now vertical due to column direction */
+	/*background-color: rgba(0, 0, 0, 0.6);*/
+	bottom: 0;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	left: 300px;
+	overflow: hidden;
+	/* Prevents scroll bars in the div itself */
+	padding: 0.5rem 2.5rem 1.5rem;
+	position: fixed;
+	right: 0;
+	text-size-adjust: 100%;
+	tab-size: 4;
+	width: calc(100% - 300px);
+	z-index: 10000;
+}
+
+@media (max-width: 768px) {
+	.chat-form-wrapper {
+		left: 0;
+		width: 100%;
+	}
+}
+
+.chat-form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.textarea-wrapper {
+	display: flex;
+	position: relative;
+	flex-grow: 1;
+	width: 100%;
+}
+
+/* Styles for your textarea to resize vertically */
+.resize-y {
+	resize: vertical;
+	min-height: 50px;
+	padding-left: 50px;
+	/* Add padding to prevent text from going under the icon */
+	padding-right: 40px;
+	/* Add padding to prevent text from going under the icon */
+	width: 100%;
+}
+
+.send-button {
+	position: absolute;
+	right: 10px;
+	/* Distance from the right, adjust as needed */
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+.record-button {
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+.vu-meter-outer {
+	position: absolute;
+	width: 6px;
+	height: 24px;
+	left: 40px;
+	bottom: 4px;
+	transform: translateY(-50%);
+	background-color: gray;
+	border: 1px solid #666;
+	border-radius: 3px;
+	cursor: pointer;
+	outline: none;
+	transition: all 0.5s;
+}
+
+.vu-meter-inner {
+	transition: all 0.1s;
+	width: 4px;
+	margin: 0 auto;
+	background-color: limegreen;
+	border-radius: 2px;
+	position: absolute;
+	bottom: 0;
+}
+
+.send-button svg {
+	color: inherit;
+	/* Replace with your preferred icon color */
+	width: 24px;
+	height: 24px;
+}
+
+/* Consolidated disabled button styling */
+.send-button:disabled,
+.send-button:disabled svg {
+	opacity: 0.5;
+	/* Dim the button to indicate it's disabled */
+	cursor: not-allowed;
+	/* Change the cursor to indicate the button cannot be used */
+}
+
+@media (max-width: 768px) {
+	.chat-form {
+		left: 0;
+		width: 100%;
+	}
+
+	.send-button {
+		right: 5px;
+		/* Adjust for mobile if needed */
+	}
+}
+
+.audio-recorder-pico {
+	position: absolute;
+	right: 50px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+/*------------ SideNav ------------*/
+
+.side-nav {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 6rem;
+	left: 0;
+	bottom: 0;
+	width: 300px;
+	transition: transform 0.3s ease-in-out;
+	overflow: visible;
+	z-index: 14000;
+}
+
+.toggle-btn {
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 13000;
+	width: 10px;
+	height: 30px;
+	background-color: hsla(50, 100%, 100%, 0.167);
+	/*border: 1px solid yellow;*/
+	cursor: pointer;
+	visibility: visible;
+}
+
+/* Positioning the toggle button for desktop */
+@media (min-width: 768px) {
+	.toggle-btn {
+		left: 300px;
+		/* Adjust as necessary */
+	}
+}
+
+/* Positioning the toggle button for mobile */
+@media (max-width: 768px) {
+	.toggle-btn {
+		left: 300px;
+		/* Position the button on the left edge */
+	}
+}
+
+/* SideNav open/close styles */
+.side-nav-open {
+	transform: translateX(0);
+}
+
+.side-nav-closed {
+	transform: translateX(-300px);
+}
+
+@media (max-width: 768px) {
+	.side-nav {
+		/*transform: translateX(-300px);*/
+	}
+}
+
+.side-nav .side-nav-top {
+	/* This div will stay at the top */
+	background-color: hsla(50, 5%, 30%, 0.2);
+	padding: 0 !important;
+	height: 6rem;
+	/* Static height */
+}
+
+.side-nav .side-nav-main {
+	/* This div will take up remaining space */
+	flex-grow: 1;
+	/* Will grow to fill available space */
+	overflow-y: auto;
+	/* Scrollable content */
+	padding: 1rem 1.5rem;
+}
+
+.side-nav .quick-translate {
+	/* This div will grow as needed, starting from whatever height the content requires */
+	background-color: hsla(50, 5%, 50%, 0.2);
+	padding: 1rem 1.5rem;
+	flex-shrink: 0;
+	/* Prevent this from shrinking smaller than its content size */
+}
+
+.side-nav .active-session {
+	background-color: hsla(50, 5%, 50%, 0.2);
+	/*TODO: use a variable here ^*/
+	padding: 2px;
+}
+
+.side-nav .translate-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: space-between;
+	gap: 0.5rem;
+}
+
+.side-nav .translate-box .input-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.side-nav .translate-box .input-field {
+	flex-grow: 1;
+}
+
+.side-nav .send-button {
+	position: absolute;
+	right: 0.5rem;
+	/* Adjust to align with the end of the input field */
+	padding: 0.5rem;
+	/* Adjust based on your design */
+	margin: 0.25rem;
+	/* Adjust to align with the input field styling */
+	border: none;
+	/* Remove border if it's not part of the button design */
+	background: transparent;
+	/* Remove background */
+	cursor: pointer;
+	/* Optional: changes the cursor on hover */
+	opacity: 1;
+	/* Make sure the button is fully opaque */
+	color: inherit;
+	/* Inherit color from parent if needed */
+}
+
+.send-button svg {
+	fill: currentColor;
+	/* or any specific color you want for the icon */
+	width: 24px;
+	/* Adjust size as needed */
+	height: 24px;
+	/* Adjust size as needed */
+}
+
+/*.side-nav .send-button:hover {
+  background-color: rgba(128, 128, 128, 0.5);
+}*/
+
+.side-nav .translate-box input {
+	padding: 0.5rem;
+	margin: 0.25rem;
+}
+
+.side-nav .translate-box .buttons-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	/* Adds space between buttons if needed */
+}
+
+.side-nav .translate-box .translate-header {
+	text-align: center;
+	font-size: 0.8rem;
+	flex-grow: 1;
+	flex-basis: 50%;
+}
+
+/* Adjusted to target the button inside the buttons-container for both the swap and translate button */
+.side-nav .translate-box .buttons-container button {
+	flex-grow: 1;
+	/* Each button can grow to fill the container */
+	/* If you want them to take exactly half of the container without considering the gap or padding, you can use flex-basis: 50% and potentially adjust for margins or padding as necessary */
+	flex-basis: 50%;
+	font-size: 0.7rem;
+	line-height: 0.6rem;
+	border: 1px solid white;
+	border-radius: 15px;
+	background-color: rgba(128, 128, 128, 0.2);
+	/* 50% transparent gray */
+	color: white;
+	padding: 5px 10px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.side-nav .translate-box .buttons-container .swap-button {
+	font-size: 0.7rem;
+	line-height: 0.6rem;
+	width: 1.5rem;
+}
+
+.side-nav .translate-button {
+	border: 1px solid white;
+	border-radius: 15px;
+	background-color: rgba(128, 128, 128, 0.2);
+	/* 50% transparent gray */
+	color: white;
+	padding: 5px 10px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.side-nav .translate-button:hover {
+	background-color: rgba(128, 128, 128, 0.7);
+	/* 70% transparent gray */
+	transform: scale(1.05);
+}
+
+/*----------------------------------*/
+
+.main-chat-container {
+	padding: 1rem 2rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.chat-outer-container {
+	display: flex;
+	flex-direction: column;
+	border-radius: 1.5rem;
+
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.chat-message-loading {
+	width: 50px;
+	height: 50px;
+	border: 1px solid yellow;
+}
+
+.human-outer-container {
+	background-color: hsla(50, 10%, 1%, 0.2);
+}
+
+.ai-outer-container {
+	background-color: hsla(50, 5%, 0%, 0.35);
+}
+
+.chat-message-container {
+	display: flex;
+	flex-direction: row;
+	padding: 1rem;
+	/*border: 1px solid yellow;*/
+	border-radius: 1rem;
+	width: 100%;
+
+	background-color: rgba(137, 137, 137, 0.1);
+	margin-bottom: 0.5rem;
+}
+
+.chat-message-icon-wrapper {
+	/*border: 1px solid orange;*/
+	min-width: 80px;
+}
+
+.chat-message-main-area {
+	display: flex;
+	flex-direction: column;
+	/*width: 100%;*/
+}
+
+.message-main-area p {
+	margin-bottom: 0.25rem;
+}
+
+.chat-message-inner-upper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.human-message-container {
+	justify-content: flex-end;
+	padding-left: 3.5rem;
+}
+
+.ai-message-container {
+	justify-content: flex-start;
+	padding-right: 3.5rem;
+}
+
+.chat-playaudio-container {
+	width: 100%;
+	padding-left: 0.67rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.audio-scrubber-container {
+	overflow: hidden;
+	width: calc(100% - 10rem);
+	min-width: 240px;
+	height: 1.25rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.audio-scrubber {
+	width: 1%;
+	min-width: 10px;
+	height: 1rem;
+	margin-left: 0.5rem;
+	opacity: 50%;
+	transform: translateX(-100%);
+	transition: width 0.75s cubic-bezier(0.215, 0.61, 0.355, 1),
+		transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+	visibility: hidden;
+}
+
+.audio-scrubber-visible {
+	width: calc(100% - 23rem);
+	min-width: 390px;
+	transform: translateX(0);
+	visibility: visible;
+	padding-right: 1rem;
+}
+
+@media (max-width: 768px) {
+	.audio-scrubber-container {
+		min-width: 150px;
+	}
+
+	.audio-scrubber {
+		min-width: 135px;
+	}
+}
+
+.audio-scrubber:hover {
+	opacity: 100%;
+}
+
+.textarea-wrapper {
+	display: flex;
+	position: relative;
+	flex-grow: 1;
+}
+
+.chat-message-container,
+.textarea-wrapper {
+	max-width: 800px;
+}
+
+.chat-icon {
+	width: 2rem;
+	height: 2rem;
+	margin: 0.5rem;
+	border-radius: 50%;
+}
+
+.chat-icon-lilo {
+	width: 2.4rem;
+	height: 2rem;
+}
+
+.chat-icon-user {
+}
+
+.howl-button {
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: 0.5rem;
+	border-radius: 50%;
+	position: relative;
+}
+
+.lds-ring {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.lds-ring div {
+	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	width: 80%;
+	height: 80%;
+	/*margin: 8px;*/
+	margin: 0;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+	animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+	animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+	animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.grammar-analysis-wrapper {
+	position: fixed;
+	margin: 0 auto;
+	bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	left: 300px;
+	padding: 0 2rem;
+	width: calc(100% - 300px);
+	height: 1px;
+	min-width: 200px;
+	z-index: 11500;
+	overflow: visible;
+}
+
+@media (max-width: 768px) {
+	.grammar-analysis-wrapper {
+		left: 0;
+		width: 100%;
+	}
+}
+
+.grammar-analysis-inner {
+	/*border: 2px solid orange;*/
+	overflow: visible;
+	width: 100%;
+	height: 1px;
+	position: relative;
+}
+
+.grammar-analysis-main {
+	/*flex-grow: 1;*/
+	max-width: 800px;
+	overflow: visible;
+	width: 100%;
+	height: 1px;
+	position: relative;
+	z-index: 11500;
+}
+
+.grammar-analysis-content {
+	background: hsla(240, 2%, 100%, 0.9);
+	padding: 2rem;
+	border-radius: 2rem;
+	color: #333;
+	bottom: 70px;
+	right: 0;
+	min-width: 300px;
+	position: absolute;
+	width: 90%;
+	min-height: 10vh;
+	/* Optional: Set a minimum height */
+	max-height: 60vh;
+	border: 1px solid orange;
+	overflow: auto;
+	/* Changed to auto to show scroll only when needed */
+}
+
+.grammar-analysis-content p {
+	margin-bottom: 25px;
+	margin-right: 0;
+}
+
+.grammar-analysis-avatar {
+	bottom: 0px;
+	right: -20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	width: 50px;
+	position: absolute;
+	height: 80px;
+}
+
+.grammar-analysis-header {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	/* This ensures it spans the full width of the parent */
+	height: 30px;
+	/* adjust as needed */
+}
+
+.grammar-analysis-pageblock {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	/* This ensures it spans the full width of the parent */
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.popover-delete {
+	/*border: 1px solid yellow;*/
+	z-index: 15500 !important;
+}
+
+.icon-close-button {
+	position: absolute;
+	top: -120px;
+	/* align to the top of the header doesn't work */
+	right: 30px;
+	/* align to the right of the header */
+	width: 30px;
+	height: 30px;
+	color: #333;
+	/*border: 1px solid red;*/
+	z-index: 12000;
+}
+
+.thought-bubble-button {
+	width: 50px;
+	height: 50px;
+	color: #333;
+	position: absolute;
+	bottom: 100px;
+	transform: scalex(-1);
+	right: -10px;
+}
+
+.hidden-grammar {
+	/*display: none;*/
+	visibility: hidden !important;
+	height: 1px !important;
+	width: 1px !important;
+	max-height: 1px !important;
+	max-width: 1px !important;
+}
+
+.not-displayed {
+	display: none;
+}
+
+.errors-corrections-table {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.errors-corrections-row {
+	display: flex;
+	border-bottom: 1px solid #ccc;
+}
+
+.errors-corrections-row:last-child {
+	border-bottom: none;
+}
+
+.errors-corrections-column {
+	padding: 10px;
+	text-align: left;
+	flex: 0 0 25%;
+	/* Default for all columns */
+	font-weight: normal;
+}
+
+.errors-corrections-column p {
+	font-weight: normal;
+}
+
+/* Specific flex settings for the last column */
+.errors-corrections-column:last-child {
+	flex: 1 1 auto;
+	/* Third column takes up the remaining space */
+}
+
+/* Style for the header row */
+.errors-corrections-row.header-row .errors-corrections-column {
+	font-weight: bold;
+	background-color: #f0f0f0;
+}
+
+/* Normal font weight for all other rows */
+.errors-corrections-row:not(.header-row) .errors-corrections-column {
+	font-weight: normal;
+}
+
+@media (max-width: 768px) {
+	.errors-corrections-row {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.errors-corrections-column {
+		flex: 0 0 auto;
+		/* Each column takes up the full width of the row */
+		width: 100%;
+	}
+
+	/* Optional: Add some margin between columns when they are displayed as rows */
+	.errors-corrections-column:not(:last-child) {
+		margin-bottom: 10px;
+	}
+}
+
+/*-----------------------*/
+
+.custom-modal-overlay {
+	background-color: rgba(0, 0, 0, 0.3);
+	position: fixed;
+	z-index: 16000;
+	width: 100%;
+	height: 100vh !important;
+	min-height: 100% !important;
+	top: 0 !important;
+}
+
+.modal-close-button {
+	position: absolute;
+	right: 50px;
+	bottom: 15px;
+	width: auto;
+	height: 30px;
+	border: 1px solid white;
+	border-radius: 12px;
+	padding: 1.3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* --------------------------*/
+
+.something {
+	width: 100px;
+	height: 100px;
+	border: 1px solid yellow;
+}
