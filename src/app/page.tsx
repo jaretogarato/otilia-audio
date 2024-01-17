@@ -7,25 +7,26 @@ export default function Home() {
 	return (
 		<main className={styles.main}>
 			<div className={styles.description}>
+				<h2>Otilia</h2>
 				<p>
-					Get started by editing&nbsp;
-					<code className={styles.code}>src/app/page.tsx</code>
+					<code className={styles.code}>Spoken by Gustavo Gallardo</code>
 				</p>
 				<div>
 					<a
-						href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
+						href="https://www.gyvdesign.com"
+						//target="_blank"
+						//rel="noopener noreferrer"
 					>
 						By{' '}
-						<Image
+						{/*<Image
 							src="/vercel.svg"
 							alt="Vercel Logo"
 							className={styles.vercelLogo}
 							width={100}
 							height={24}
 							priority
-						/>
+						/>*/}
+						Gyv Design
 					</a>
 				</div>
 			</div>
@@ -34,16 +35,20 @@ export default function Home() {
 				{/*<Image
 					className={styles.logo}
 					src="/next.svg"
-					alt="Next.js Logo"
+					alt="Next.js Logo"S
 					width={180}
 					height={37}
 					priority
 				/>*/}
-				<PlayAudio filePath="/audio/OtiliaAudio-09.wav" />
+				<PlayAudio filePath="/audio/OtiliaAudio-10.wav" />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<div className={styles.sneaky}>
+					<PlayAudio filePath="/audio/OtiliaAudio-09.wav" />
+				</div>
 			</div>
 
 			<div className={styles.grid}>
-				<a
+				{/*<a
 					href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
 					className={styles.card}
 					target="_blank"
@@ -91,7 +96,7 @@ export default function Home() {
 					<p>
 						Instantly deploy your Next.js site to a shareable URL with Vercel.
 					</p>
-				</a>
+				</a>*/}
 			</div>
 		</main>
 	)
